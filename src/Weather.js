@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FormattedDate from "./FormattedDate";
+import FormattedDayShort from "./FormattedDayShort";
+import FormattedDateShort from "./FormattedDateShort";
 import "./Weather.css";
 import logo from "./images/vane.svg";
 
@@ -17,10 +20,7 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       description: response.data.weather[0].description,
       pressure: response.data.main.pressure,
-      day: "Tuesday",
-      dayShort: "Tue",
-      date: "25",
-      month: "Oct",
+      date: new Date(response.data.dt * 1000),
       imgUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
     });
 
@@ -86,8 +86,9 @@ export default function Weather(props) {
                   <li className="nav-item" role="presentation">
                     <div className="nav-link">
                       <div className="day">
-                        <span>{weatherData.dayShort}</span>
-                        <br />
+                        <span>
+                          <FormattedDayShort date={weatherData.date} />
+                        </span>
                         <img
                           className="day-icon"
                           alt={weatherData.description}
@@ -98,7 +99,7 @@ export default function Weather(props) {
                         <span>°</span>
                         <br />
                         <span>
-                          {weatherData.date} {weatherData.month}
+                          <FormattedDateShort date={weatherData.date} />
                         </span>
                       </div>
                     </div>
@@ -135,9 +136,9 @@ export default function Weather(props) {
                             {weatherData.description}
                           </span>
                           <br />
-                          <span>{weatherData.day}</span>
-                          <br />
-                          <strong></strong>
+                          <span>
+                            <FormattedDate date={weatherData.date} />
+                          </span>
                         </div>
                       </div>
                       <div className="col-4 weather-param">
@@ -184,7 +185,6 @@ export default function Weather(props) {
   //displaying "Loading..." and not showing the app if the response was not received
   else {
     const apiKey = "5f88737082e422aa9d05e764356880e9";
-    let city = "Stockholm";
     let units = "metric";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(handleResponse);
