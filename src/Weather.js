@@ -4,9 +4,11 @@ import "./Weather.css";
 import logo from "./images/vane.svg";
 
 export default function Weather(props) {
+  //initially the object is empty, except for one property - ready - which means that response was not received yet
   const [weatherData, setWeatherData] = useState({ ready: false });
+  //this function runs when we received an API response
   function handleResponse(response) {
-    console.log(response.data);
+    //setting weather parameters according to the response received
     setWeatherData({
       ready: true,
       temperature: Math.round(response.data.main.temp),
@@ -21,8 +23,20 @@ export default function Weather(props) {
       month: "Oct",
       imgUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
     });
+
+    //displaying fact of the day
+    let apiFactUrl = `https://uselessfacts.jsph.pl/random.json?language=en`;
+    fetch(apiFactUrl, { headers: { "Content-Type": "application/json" } })
+      .then(async function(response) {
+        let { text } = JSON.parse(await response.text());
+        document.querySelector("#day-fact").innerHTML = text;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
+  //displaying the app if the response from API was received
   if (weatherData.ready) {
     return (
       <div className="Weather">
@@ -143,9 +157,7 @@ export default function Weather(props) {
                             <strong>Fact of the day</strong>
                           </div>
                           <div className="card-body">
-                            <p className="card-text" s>
-                              Some exciting fact
-                            </p>
+                            <p className="card-text" id="day-fact"></p>
                           </div>
                         </div>
                       </div>
@@ -168,7 +180,9 @@ export default function Weather(props) {
         </div>
       </div>
     );
-  } else {
+  }
+  //displaying "Loading..." and not showing the app if the response was not received
+  else {
     const apiKey = "5f88737082e422aa9d05e764356880e9";
     let city = "Stockholm";
     let units = "metric";
