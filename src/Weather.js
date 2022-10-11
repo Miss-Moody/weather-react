@@ -3,6 +3,7 @@ import axios from "axios";
 import FormattedDate from "./FormattedDate";
 import FormattedDayShort from "./FormattedDayShort";
 import FormattedDateShort from "./FormattedDateShort";
+import WeatherIcon from "./WeatherIcon";
 import "./Weather.css";
 import logo from "./images/vane.svg";
 
@@ -22,7 +23,7 @@ export default function Weather(props) {
       description: response.data.weather[0].description,
       pressure: response.data.main.pressure,
       date: new Date(response.data.dt * 1000),
-      imgUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
+      icon: response.data.weather[0].icon,
     });
 
     //displaying fact of the day
@@ -113,14 +114,15 @@ export default function Weather(props) {
                         <span>
                           <FormattedDayShort date={weatherData.date} />
                         </span>
-                        <img
-                          className="day-icon"
-                          alt={weatherData.description}
-                          src={weatherData.imgUrl}
-                        />
 
-                        <span>{weatherData.temperature}</span>
+                        <span className="day-icon">
+                          <WeatherIcon code={weatherData.icon} />
+                        </span>
+                        <span className="day-temp">
+                          {weatherData.temperature}
+                        </span>
                         <span>°</span>
+
                         <br />
                         <span>
                           <FormattedDateShort date={weatherData.date} />
@@ -141,12 +143,10 @@ export default function Weather(props) {
                     <div className="row">
                       <div className="col-3">
                         <div className="day-big">
-                          <img
-                            className="day-big-icon"
-                            src={weatherData.imgUrl}
-                            alt={weatherData.description}
-                          />
-                          <br />
+                          <div className="day-big-icon">
+                            <WeatherIcon code={weatherData.icon} />
+                          </div>
+
                           <strong>
                             <span>{weatherData.temperature}</span>
                             <a href="/" className="active">
