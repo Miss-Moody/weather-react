@@ -9,6 +9,7 @@ import logo from "./images/vane.svg";
 export default function Weather(props) {
   //initially the object is empty, except for one property - ready - which means that response was not received yet
   const [weatherData, setWeatherData] = useState({ ready: false });
+  const [city, setCity] = useState(props.defaultCity);
   //this function runs when we received an API response
   function handleResponse(response) {
     //setting weather parameters according to the response received
@@ -36,6 +37,24 @@ export default function Weather(props) {
       });
   }
 
+  function search() {
+    const apiKey = "5f88737082e422aa9d05e764356880e9";
+    let units = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    //search for a city
+    search();
+  }
+
+  function handleCityChange(event) {
+    //everytime we type something in search field, it is being updated
+    setCity(event.target.value);
+  }
+
   //displaying the app if the response from API was received
   if (weatherData.ready) {
     return (
@@ -50,13 +69,18 @@ export default function Weather(props) {
                     <p className="navbar-brand logo-title">Weazzy</p>
                   </div>
 
-                  <form className="d-flex" role="search">
+                  <form
+                    className="d-flex"
+                    role="search"
+                    onSubmit={handleSubmit}
+                  >
                     <input
                       className="form-control me-2"
                       type="search"
                       placeholder="Enter city..."
                       aria-label="Search"
                       autoComplete="off"
+                      onChange={handleCityChange}
                     />
                     <button
                       className="btn btn-outline-success search-button"
@@ -184,10 +208,7 @@ export default function Weather(props) {
   }
   //displaying "Loading..." and not showing the app if the response was not received
   else {
-    const apiKey = "5f88737082e422aa9d05e764356880e9";
-    let units = "metric";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}`;
-    axios.get(apiUrl).then(handleResponse);
+    search();
     return "Loading...";
   }
 }
