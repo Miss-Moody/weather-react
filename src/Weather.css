@@ -71,56 +71,6 @@ a.active:hover {
   margin-left: 10px;
 }
 
-.nav-tabs {
-  margin: 20px 20px 0px 20px;
-  --bs-nav-tabs-border-width: 0;
-}
-
-.tab-content {
-  margin: 0 20px 20px 20px;
-  background-color: #cdc2ae !important;
-  padding: 4% 0 4% 0;
-}
-
-.nav-link.active {
-  background-color: #cdc2ae !important;
-  border-color: #cdc2ae !important;
-  border-bottom: none;
-  font-weight: 700;
-}
-
-.nav-link {
-  width: 100%;
-  color: #354259;
-  text-align: center;
-  border: none;
-}
-
-.nav-link:hover {
-  border-color: #ece5c7 !important;
-  color: #354259;
-  border-radius: 0;
-}
-
-.nav-item {
-  width: 20%;
-}
-
-.nav-item:first-child {
-  background-color: #cdc2ae !important;
-  border: none;
-  font-weight: 700;
-}
-.nav-item:first-child:hover {
-  background-color: #cdc2ae !important;
-  border: none;
-  font-weight: 700;
-}
-
-.day-icon {
-  width: 45px;
-}
-
 .day-big {
   text-align: center;
   font-size: 18px;

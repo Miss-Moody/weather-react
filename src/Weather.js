@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import FormattedDate from "./FormattedDate";
-import FormattedDayShort from "./FormattedDayShort";
-import FormattedDateShort from "./FormattedDateShort";
 import WeatherTemperature from "./WeatherTemperature";
+import WeatherForecast from "./WeatherForecast";
 import WeatherIcon from "./WeatherIcon";
 import "./Weather.css";
 import logo from "./images/vane.svg";
@@ -107,32 +106,8 @@ export default function Weather(props) {
               </button>
             </div>
             <div className="all-days-weather">
-              <div className="forecast">
-                <ul className="nav nav-tabs" role="tablist">
-                  <li className="nav-item" role="presentation">
-                    <div className="nav-link">
-                      <div className="day">
-                        <span>
-                          <FormattedDayShort date={weatherData.date} />
-                        </span>
+              <WeatherForecast />
 
-                        <span className="day-icon">
-                          <WeatherIcon code={weatherData.icon} />
-                        </span>
-                        <span className="day-temp">
-                          {weatherData.temperature}
-                        </span>
-                        <span>°</span>
-
-                        <br />
-                        <span>
-                          <FormattedDateShort date={weatherData.date} />
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
               <div className="tab-content">
                 <div
                   className="tab-pane fade show active"
@@ -145,7 +120,7 @@ export default function Weather(props) {
                       <div className="col-3">
                         <div className="day-big">
                           <div className="day-big-icon">
-                            <WeatherIcon code={weatherData.icon} />
+                            <WeatherIcon code={weatherData.icon} size={60} />
                           </div>
                           <WeatherTemperature
                             celsius={weatherData.temperature}
@@ -155,11 +130,13 @@ export default function Weather(props) {
                             {weatherData.description}
                           </span>
                           <br />
+
                           <span>
                             <FormattedDate date={weatherData.date} />
                           </span>
                         </div>
                       </div>
+
                       <div className="col-4 weather-param">
                         <p>
                           Wind: <span>{weatherData.wind}</span> km/h
