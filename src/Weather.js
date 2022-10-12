@@ -3,6 +3,7 @@ import axios from "axios";
 import FormattedDate from "./FormattedDate";
 import FormattedDayShort from "./FormattedDayShort";
 import FormattedDateShort from "./FormattedDateShort";
+import WeatherTemperature from "./WeatherTemperature";
 import WeatherIcon from "./WeatherIcon";
 import "./Weather.css";
 import logo from "./images/vane.svg";
@@ -29,11 +30,11 @@ export default function Weather(props) {
     //displaying fact of the day
     let apiFactUrl = `https://uselessfacts.jsph.pl/random.json?language=en`;
     fetch(apiFactUrl, { headers: { "Content-Type": "application/json" } })
-      .then(async function(response) {
+      .then(async function (response) {
         let { text } = JSON.parse(await response.text());
         document.querySelector("#day-fact").innerHTML = text;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -146,15 +147,9 @@ export default function Weather(props) {
                           <div className="day-big-icon">
                             <WeatherIcon code={weatherData.icon} />
                           </div>
-
-                          <strong>
-                            <span>{weatherData.temperature}</span>
-                            <a href="/" className="active">
-                              {" "}
-                              °C
-                            </a>{" "}
-                            |<a href="/">°F</a>
-                          </strong>
+                          <WeatherTemperature
+                            celsius={weatherData.temperature}
+                          />
                           <br />
                           <span className="text-capitalize">
                             {weatherData.description}
