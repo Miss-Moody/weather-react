@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import axios from "axios";
 import WeatherIcon from "./WeatherIcon";
 import FormattedDayShort from "./FormattedDayShort";
 import FormattedDateShort from "./FormattedDateShort";
 import "./WeatherForecast.css";
 
-export default function WeatherForecast() {
+export default function WeatherForecast(props) {
+  function displayForecast(response) {
+    console.log(response.data);
+  }
+
+  let apiKey = "5f88737082e422aa9d05e764356880e9";
+  let longitude = props.coordinates.lon;
+  let latitude = props.coordinates.lat;
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  axios.get(apiForecastUrl).then(displayForecast);
+
   return (
     <div className="WeatherForecast">
       <ul className="nav nav-tabs" role="tablist">

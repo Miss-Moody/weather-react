@@ -16,6 +16,7 @@ export default function Weather(props) {
     //setting weather parameters according to the response received
     setWeatherData({
       ready: true,
+      coordinates: response.data.coord,
       temperature: Math.round(response.data.main.temp),
       city: response.data.name,
       wind: response.data.wind.speed,
@@ -106,7 +107,7 @@ export default function Weather(props) {
               </button>
             </div>
             <div className="all-days-weather">
-              <WeatherForecast />
+              <WeatherForecast coordinates={weatherData.coordinates} />
 
               <div className="tab-content">
                 <div
