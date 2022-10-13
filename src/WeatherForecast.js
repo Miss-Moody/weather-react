@@ -1,44 +1,37 @@
 import React, { useState } from "react";
 import axios from "axios";
-import WeatherIcon from "./WeatherIcon";
-import FormattedDayShort from "./FormattedDayShort";
-import FormattedDateShort from "./FormattedDateShort";
 import "./WeatherForecast.css";
+import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
+  let [loaded, setLoaded] = useState(false);
+  let [forecast, setForecast] = useState(null);
   function displayForecast(response) {
-    console.log(response.data);
+    setForecast(response.data.daily);
+    console.log(response.data.daily);
+    setLoaded(true);
   }
+  //looping through all days of the forecast and showing the weather for the first 5 of them
+  if (loaded) {
+    return (
+      <div className="WeatherForecast">
+        <ul className="nav nav-tabs" role="tablist">
+          {forecast.map(function (dailyForecast, index) {
+            if (index < 5) {
+              return <WeatherForecastDay data={dailyForecast} key={index} />;
+            }
+          })}
+        </ul>
+      </div>
+    );
+  } else {
+    let apiKey = "5f88737082e422aa9d05e764356880e9";
+    let longitude = props.coordinates.lon;
+    let latitude = props.coordinates.lat;
+    let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
 
-  let apiKey = "5f88737082e422aa9d05e764356880e9";
-  let longitude = props.coordinates.lon;
-  let latitude = props.coordinates.lat;
-  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-  axios.get(apiForecastUrl).then(displayForecast);
+    axios.get(apiForecastUrl).then(displayForecast);
 
-  return (
-    <div className="WeatherForecast">
-      <ul className="nav nav-tabs" role="tablist">
-        <li className="nav-item" role="presentation">
-          <div className="nav-link">
-            <div className="day">
-              <div className="WeatherForecast-day ">
-                <div className="FormattedDayShort">Thu</div>
-                <div className="FormattedDateShort">25 Oct</div>
-              </div>
-              <span className="day-icon">
-                <WeatherIcon code="01d" size="36" />
-              </span>
-              <div className="WeatherForecast-temperatures day-temp">
-                <span className="WeatherForecast-temperature-max">19</span>
-                <span>°</span>
-                <span className="WeatherForecast-temperature-min">10</span>
-                <span>°</span>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  );
+    return null;
+  }
 }
