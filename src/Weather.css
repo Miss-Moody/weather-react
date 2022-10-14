@@ -21,12 +21,19 @@ a.active:hover {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 
+.container-fluid {
+  padding: 0 20px;
+}
+
 .header .app-header {
   background-color: #c2ded1 !important;
 }
 
 .header .cockvane {
   width: 90px;
+  position: relative;
+  top: 0px;
+  left: -20px;
 }
 
 .header .logo-title {
@@ -35,7 +42,7 @@ a.active:hover {
   color: #354259;
   position: relative;
   top: 5px;
-  left: -20px;
+  left: -40px;
 }
 
 .header .logo-title:hover {
@@ -43,7 +50,7 @@ a.active:hover {
   border-color: #354259;
 }
 
-.btn-outline-success {
+.search-button {
   --bs-btn-color: #354259;
   --bs-btn-border-color: #354259;
   --bs-btn-hover-color: #fff;
@@ -64,11 +71,6 @@ a.active:hover {
   margin-bottom: 20px;
   padding-left: 20px;
   font-size: 20px;
-}
-
-.find-me-button {
-  display: inline-block;
-  margin-left: 10px;
 }
 
 .day-big {

@@ -83,10 +83,7 @@ export default function Weather(props) {
                       autoComplete="off"
                       onChange={handleCityChange}
                     />
-                    <button
-                      className="btn btn-outline-success search-button"
-                      type="submit"
-                    >
+                    <button className="btn search-button" type="submit">
                       <i className="fa-solid fa-magnifying-glass search-icon"></i>
                     </button>
                   </form>
@@ -98,12 +95,6 @@ export default function Weather(props) {
               <span className="current-city">
                 <strong> {weatherData.city}</strong>
               </span>
-              <button
-                className="btn btn-outline-success search-button find-me-button"
-                type="submit"
-              >
-                <i className="fa-solid fa-location-dot"></i>
-              </button>
             </div>
             <div className="all-days-weather">
               <WeatherForecast coordinates={weatherData.coordinates} />
